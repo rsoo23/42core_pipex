@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 10:40:13 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/02 16:46:49 by rsoo             ###   ########.fr       */
+/*   Created: 2023/03/14 23:47:11 by rsoo              #+#    #+#             */
+/*   Updated: 2023/05/31 10:53:57 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	PIPEX_H
-# define PIPEX_H
+#include "../libft.h"
 
-# include "libft/libft.h"
-
-typedef struct s_cmds
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void*), void(*del)(void*))
 {
-	char			**cmd;
-	struct s_cmds	*next;
-}	t_cmds;
+	t_list	*new_lst;
+	t_list	*temp;
 
-typedef struct s_info
-{
-	int		fd_in;
-	int		fd_out;
-	t_cmds	*cmds; 
-}	t_info;
-
-#endif
+	new_lst = 0;
+	if (!lst || !f || !del)
+		return (0);
+	while (lst)
+	{
+		temp = ft_lstnew(f(lst-> content));
+		if (!temp)
+		{
+			ft_lstclear(&new_lst, del);
+			return (0);
+		}
+		ft_lstadd_back(&new_lst, temp);
+		lst = lst-> next;
+	}
+	ft_lstadd_back(&new_lst, NULL);
+	return (new_lst);
+}

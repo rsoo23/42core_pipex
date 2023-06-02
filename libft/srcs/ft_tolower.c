@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 10:40:13 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/02 16:46:49 by rsoo             ###   ########.fr       */
+/*   Created: 2023/03/05 22:31:11 by rsoo              #+#    #+#             */
+/*   Updated: 2023/05/31 10:53:57 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	PIPEX_H
-# define PIPEX_H
+#include "../libft.h"
 
-# include "libft/libft.h"
-
-typedef struct s_cmds
+int	ft_tolower(int c)
 {
-	char			**cmd;
-	struct s_cmds	*next;
-}	t_cmds;
+	if (c >= 'A' && c <= 'Z')
+		c += 32;
+	return (c);
+}
 
-typedef struct s_info
+/*
+#include <stdio.h>
+int main()
 {
-	int		fd_in;
-	int		fd_out;
-	t_cmds	*cmds; 
-}	t_info;
-
-#endif
+    char i;
+    scanf("%c", &i);
+    printf("%c\n", ft_tolower(i));
+}
+*/

@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 10:40:13 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/02 16:46:49 by rsoo             ###   ########.fr       */
+/*   Created: 2023/03/09 12:08:16 by rsoo              #+#    #+#             */
+/*   Updated: 2023/05/31 10:53:57 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	PIPEX_H
-# define PIPEX_H
+#include "../libft.h"
 
-# include "libft/libft.h"
-
-typedef struct s_cmds
+void	ft_putnbr_fd(int n, int fd)
 {
-	char			**cmd;
-	struct s_cmds	*next;
-}	t_cmds;
+	if (n == -2147483648)
+		write(fd, "-2147483648", 11);
+	else if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		n = -n;
+		ft_putnbr_fd(n, fd);
+	}
+	else if (n > 9)
+	{
+		ft_putnbr_fd((n / 10), fd);
+		ft_putchar_fd((n % 10) + 48, fd);
+	}
+	else
+		ft_putchar_fd(n + 48, fd);
+}
 
-typedef struct s_info
-{
-	int		fd_in;
-	int		fd_out;
-	t_cmds	*cmds; 
-}	t_info;
-
-#endif
+// int main()
+// {
+//     ft_putnbr_fd(2147483647, 1);
+//     ft_putchar_fd('\n', 1);
+// }

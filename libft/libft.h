@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:16:05 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/02 08:48:36 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/05/31 11:06:54 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <string.h> // strerror
 # include <stdio.h> // perror
 # include <sys/wait.h> // wait, waitpid
+
+# include "get_next_line/get_next_line_bonus.h"
 
 typedef struct s_list
 {
@@ -46,7 +48,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_strnstr(const char *haystk, const char *needle, size_t n);
+char	*ft_strnstr(const char *haystack, const char *needle, size_t n);
 char	*ft_strrchr(char *s, int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
