@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:40:13 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/02 16:46:49 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/04 00:17:21 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,29 @@
 
 # include "libft/libft.h"
 
-typedef struct s_cmds
-{
-	char			**cmd;
-	struct s_cmds	*next;
-}	t_cmds;
-
 typedef struct s_info
 {
 	int		fd_in;
 	int		fd_out;
-	t_cmds	*cmds; 
+	int		cmd_num;
+	int		pipe_num;
+	char	***cmds;
+	int		*pipefd[2];
+	pid_t	*pids;
+	char	*cmd_path;
+	int		cmd_index;
+	int		pipe_index;
 }	t_info;
+
+// parsing_utils.c
+void	init_info(t_info *info, int ac);
+void	get_fd(t_info *info, int ac, char **av);
+void	get_cmds(t_info *info, char **av);
+
+// piping.c
+void	parent_process(t_info *info);
+
+// utils_1.c
+void	execute_cmd(t_info *info);
 
 #endif
