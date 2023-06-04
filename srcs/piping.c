@@ -52,10 +52,15 @@ static void	pipe_to_outfile(t_info *info)
 		perror("dup2");
 		exit(EXIT_FAILURE);
 	}
-	while (read(pipefd[0], &buf, 1) > 0)
-		write(fd2, &buf, 1);
-	close(pipefd[1]);
+	execute_cmd(info);
+	read_from_pipe(info, info->fd_out, info->pipe_index);
+
 	exit(EXIT_SUCCESS);
+}
+
+static void	piping_proc(t_info *info)
+{
+	
 }
 
 void	parent_process(t_info *info)
@@ -72,13 +77,15 @@ void	parent_process(t_info *info)
 			perror("fork");
 			exit(EXIT_FAILURE);
 		}
-		else if (info->pids[0] == 0)
+		if (info->pids[0] == 0)
 			infile_to_pipe(info);
-		else if (info->pids[info->pipe_num - 1] == 0)
+		else if (info->pids[info->pipe_num] == 0)
 			pipe_to_outfile(info);
 		else
+		{
 			execute_cmd(info);
-		piping_process(info);
+			piping_process(info);
+		}
 	}
 }
 

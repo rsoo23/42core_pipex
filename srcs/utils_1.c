@@ -30,12 +30,24 @@ void	execute_cmd(t_info *info)
 	free(info->cmd_path);
 }
 
-void	write_to_pipe(t_info *info, int read_fd, int i)
+// reads from fd (infile) and writes it to the pipe
+void	write_to_pipe(t_info *info, int fd_in, int i)
 {
 	char	buf;
 
 	close(info->pipefd[i][0]);
-	while (read(read_fd, &buf, 1) > 0)
+	while (read(fd_in, &buf, 1) > 0)
 		write(info->pipefd[i][1], &buf, 1);
 	close(info->pipefd[i][1]);
+}
+
+// reads from pipe and writes to the fd (outfile)
+void	read_from_pipe(t_info *info, int fd_out, int i)
+{
+	char	buf;
+
+	close(info->pipefd[i][1])
+	while (read(info->pipefd[i][0], &buf, 1) > 0)
+		write(fd_out, &buf, 1);
+	close(info->pipefd[i][0]);
 }
