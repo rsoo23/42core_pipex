@@ -16,17 +16,20 @@ static void	execute_cmd(t_info *info)
 {
 	int		i;
 	char	*cmd_path;
+	char	**cmd;
 
 	i = -1;
+	cmd = ft_split(info->cmds[info->cmd_index], ' ');
 	while (info->path_list[++i])
 	{
 		cmd_path = ft_strjoin(info->path_list[i], "/");
-		cmd_path = ft_strjoin(cmd_path, info->cmds[info->cmd_index][0]);
-		printf("cmdpath:%s, ind: %d, cmd_ind: %d\n\n", cmd_path, i, info->cmd_index);
+		cmd_path = ft_strjoin(cmd_path, cmd[0]);
+		// printf("cmdpath:%s, ind: %d, cmd_ind: %d\n\n", cmd_path, i, info->cmd_index);
 		if (access(cmd_path, X_OK) == 0)
 		{
-			if (execve(cmd_path, info->cmds[info->cmd_index], NULL) == -1)
+			if (execve(cmd_path, cmd, NULL) == -1)
 			{
+				free_2d_array(cmd);
 				free(cmd_path);
 				free_and_exit(info);
 			}
@@ -56,10 +59,10 @@ static void	child_process(t_info *info)
 		close(pipefd[0]);
 		dup2(pipefd[1], STDOUT_FILENO);
 		execute_cmd(info);
-		info->cmd_index++;
 	}
 	else if (info->pid > 0)
 	{
+		info->cmd_index++;
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		waitpid(info->pid, NULL, 0);
@@ -85,10 +88,7 @@ void	piping(t_info *info, int ac)
 	if (dup2(info->fd_in, STDIN_FILENO) == -1)
 		free_and_exit(info);
 	while (ac-- > 4)
-	{
 		child_process(info);
-		printf("ac: %d\n", ac);
-	}
 	if (dup2(info->fd_out, STDOUT_FILENO) == -1)
 		free_and_exit(info);
 	execute_cmd(info);

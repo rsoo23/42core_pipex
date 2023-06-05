@@ -18,7 +18,7 @@ void	init_info(t_info *info, int ac)
 	info->fd_out = 0;
 	info->cmd_num = ac - 3;
 	info->pipe_num = info->cmd_num - 1;
-	info->cmds = malloc(sizeof(char **) * info->cmd_num);
+	info->cmds = malloc(sizeof(char *) * (info->cmd_num + 1));
 	info->cmd_index = 0;
 	info->pipe_index = 0;
 }
@@ -45,7 +45,8 @@ void	get_cmds(t_info *info, char **av)
 
 	i = -1;
 	while (++i < info->cmd_num)
-		info->cmds[i] = ft_split(av[i + 2], ' ');
+		info->cmds[i] = ft_strdup(av[i + 2]);
+	info->cmds[i] = 0;
 }
 
 void	get_paths(t_info *info, char **envp)

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:40:13 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/05 20:17:31 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/05 23:41:06 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_info
 	int		fd_out;
 	int		cmd_num;
 	int		pipe_num;
-	char	***cmds;
+	char	**cmds;
 	pid_t	pid;
 	int		cmd_index;
 	int		pipe_index;
@@ -35,7 +35,6 @@ void	get_cmds(t_info *info, char **av);
 void	get_paths(t_info *info, char **envp);
 
 // freeing_utils.c
-void	free_cmds(char ***cmds);
 void	free_2d_array(char **arr);
 void	free_and_exit(t_info *info);
 
