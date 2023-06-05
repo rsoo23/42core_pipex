@@ -1,0 +1,70 @@
+rm -rf srcs/main.o srcs/parsing_utils.o srcs/piping.o srcs/piping_utils.o srcs/freeing_utils.o
+make clean -C libft
+rm -rf srcs/ft_atoi.o srcs/ft_bzero.o srcs/ft_calloc.o srcs/ft_isalnum.o srcs/ft_isalpha.o srcs/ft_isascii.o srcs/ft_isdigit.o srcs/ft_isprint.o srcs/ft_itoa.o srcs/ft_memchr.o srcs/ft_memcmp.o srcs/ft_memcpy.o srcs/ft_memmove.o srcs/ft_memset.o srcs/ft_putchar_fd.o srcs/ft_putendl_fd.o srcs/ft_putnbr_fd.o srcs/ft_putstr_fd.o srcs/ft_split.o srcs/ft_strchr.o srcs/ft_strdup.o srcs/ft_striteri.o srcs/ft_strjoin.o srcs/ft_strlcat.o srcs/ft_strlcpy.o srcs/ft_strlen.o srcs/ft_strmapi.o srcs/ft_strncmp.o srcs/ft_strnstr.o srcs/ft_strrchr.o srcs/ft_strtrim.o srcs/ft_substr.o srcs/ft_tolower.o srcs/ft_toupper.o srcs_bonus/ft_lstadd_back.o srcs_bonus/ft_lstadd_front.o srcs_bonus/ft_lstclear.o srcs_bonus/ft_lstdelone.o srcs_bonus/ft_lstiter.o srcs_bonus/ft_lstlast.o srcs_bonus/ft_lstmap.o srcs_bonus/ft_lstnew.o srcs_bonus/ft_lstsize.o get_next_line/get_next_line_bonus.o get_next_line/get_next_line_utils_bonus.o
+make clean -C ft_printf
+rm -rf srcs/ft_format_check.o srcs/ft_format_check_1.o srcs/ft_print_hex.o srcs/ft_print_int.o srcs/ft_print_ptr.o srcs/ft_print_uint.o srcs/ft_printf.o srcs/ft_utils.o srcs/ft_utils_1.o srcs/ft_utils_2.o
+rm -rf pipex outfile
+make fclean -C libft
+rm -rf srcs/ft_atoi.o srcs/ft_bzero.o srcs/ft_calloc.o srcs/ft_isalnum.o srcs/ft_isalpha.o srcs/ft_isascii.o srcs/ft_isdigit.o srcs/ft_isprint.o srcs/ft_itoa.o srcs/ft_memchr.o srcs/ft_memcmp.o srcs/ft_memcpy.o srcs/ft_memmove.o srcs/ft_memset.o srcs/ft_putchar_fd.o srcs/ft_putendl_fd.o srcs/ft_putnbr_fd.o srcs/ft_putstr_fd.o srcs/ft_split.o srcs/ft_strchr.o srcs/ft_strdup.o srcs/ft_striteri.o srcs/ft_strjoin.o srcs/ft_strlcat.o srcs/ft_strlcpy.o srcs/ft_strlen.o srcs/ft_strmapi.o srcs/ft_strncmp.o srcs/ft_strnstr.o srcs/ft_strrchr.o srcs/ft_strtrim.o srcs/ft_substr.o srcs/ft_tolower.o srcs/ft_toupper.o srcs_bonus/ft_lstadd_back.o srcs_bonus/ft_lstadd_front.o srcs_bonus/ft_lstclear.o srcs_bonus/ft_lstdelone.o srcs_bonus/ft_lstiter.o srcs_bonus/ft_lstlast.o srcs_bonus/ft_lstmap.o srcs_bonus/ft_lstnew.o srcs_bonus/ft_lstsize.o get_next_line/get_next_line_bonus.o get_next_line/get_next_line_utils_bonus.o
+make clean -C ft_printf
+rm -rf srcs/ft_format_check.o srcs/ft_format_check_1.o srcs/ft_print_hex.o srcs/ft_print_int.o srcs/ft_print_ptr.o srcs/ft_print_uint.o srcs/ft_printf.o srcs/ft_utils.o srcs/ft_utils_1.o srcs/ft_utils_2.o
+rm -rf libft.a
+make fclean -C ft_printf
+rm -rf srcs/ft_format_check.o srcs/ft_format_check_1.o srcs/ft_print_hex.o srcs/ft_print_int.o srcs/ft_print_ptr.o srcs/ft_print_uint.o srcs/ft_printf.o srcs/ft_utils.o srcs/ft_utils_1.o srcs/ft_utils_2.o
+rm -rf libftprintf.a
+gcc -Wall -Wextra -Werror -fsanitize=address -g3 -c srcs/main.c -o srcs/main.o
+gcc -Wall -Wextra -Werror -fsanitize=address -g3 -c srcs/parsing_utils.c -o srcs/parsing_utils.o
+gcc -Wall -Wextra -Werror -fsanitize=address -g3 -c srcs/piping.c -o srcs/piping.o
+gcc -Wall -Wextra -Werror -fsanitize=address -g3 -c srcs/piping_utils.c -o srcs/piping_utils.o
+gcc -Wall -Wextra -Werror -fsanitize=address -g3 -c srcs/freeing_utils.c -o srcs/freeing_utils.o
+make -C libft
+gcc -Wall -Wextra -Werror -c srcs/ft_atoi.c -o srcs/ft_atoi.o
+gcc -Wall -Wextra -Werror -c srcs/ft_bzero.c -o srcs/ft_bzero.o
+gcc -Wall -Wextra -Werror -c srcs/ft_calloc.c -o srcs/ft_calloc.o
+gcc -Wall -Wextra -Werror -c srcs/ft_isalnum.c -o srcs/ft_isalnum.o
+gcc -Wall -Wextra -Werror -c srcs/ft_isalpha.c -o srcs/ft_isalpha.o
+gcc -Wall -Wextra -Werror -c srcs/ft_isascii.c -o srcs/ft_isascii.o
+gcc -Wall -Wextra -Werror -c srcs/ft_isdigit.c -o srcs/ft_isdigit.o
+gcc -Wall -Wextra -Werror -c srcs/ft_isprint.c -o srcs/ft_isprint.o
+gcc -Wall -Wextra -Werror -c srcs/ft_itoa.c -o srcs/ft_itoa.o
+gcc -Wall -Wextra -Werror -c srcs/ft_memchr.c -o srcs/ft_memchr.o
+gcc -Wall -Wextra -Werror -c srcs/ft_memcmp.c -o srcs/ft_memcmp.o
+gcc -Wall -Wextra -Werror -c srcs/ft_memcpy.c -o srcs/ft_memcpy.o
+gcc -Wall -Wextra -Werror -c srcs/ft_memmove.c -o srcs/ft_memmove.o
+gcc -Wall -Wextra -Werror -c srcs/ft_memset.c -o srcs/ft_memset.o
+gcc -Wall -Wextra -Werror -c srcs/ft_putchar_fd.c -o srcs/ft_putchar_fd.o
+gcc -Wall -Wextra -Werror -c srcs/ft_putendl_fd.c -o srcs/ft_putendl_fd.o
+gcc -Wall -Wextra -Werror -c srcs/ft_putnbr_fd.c -o srcs/ft_putnbr_fd.o
+gcc -Wall -Wextra -Werror -c srcs/ft_putstr_fd.c -o srcs/ft_putstr_fd.o
+gcc -Wall -Wextra -Werror -c srcs/ft_split.c -o srcs/ft_split.o
+gcc -Wall -Wextra -Werror -c srcs/ft_strchr.c -o srcs/ft_strchr.o
+gcc -Wall -Wextra -Werror -c srcs/ft_strdup.c -o srcs/ft_strdup.o
+gcc -Wall -Wextra -Werror -c srcs/ft_striteri.c -o srcs/ft_striteri.o
+gcc -Wall -Wextra -Werror -c srcs/ft_strjoin.c -o srcs/ft_strjoin.o
+gcc -Wall -Wextra -Werror -c srcs/ft_strlcat.c -o srcs/ft_strlcat.o
+gcc -Wall -Wextra -Werror -c srcs/ft_strlcpy.c -o srcs/ft_strlcpy.o
+gcc -Wall -Wextra -Werror -c srcs/ft_strlen.c -o srcs/ft_strlen.o
+gcc -Wall -Wextra -Werror -c srcs/ft_strmapi.c -o srcs/ft_strmapi.o
+gcc -Wall -Wextra -Werror -c srcs/ft_strncmp.c -o srcs/ft_strncmp.o
+gcc -Wall -Wextra -Werror -c srcs/ft_strnstr.c -o srcs/ft_strnstr.o
+gcc -Wall -Wextra -Werror -c srcs/ft_strrchr.c -o srcs/ft_strrchr.o
+gcc -Wall -Wextra -Werror -c srcs/ft_strtrim.c -o srcs/ft_strtrim.o
+gcc -Wall -Wextra -Werror -c srcs/ft_substr.c -o srcs/ft_substr.o
+gcc -Wall -Wextra -Werror -c srcs/ft_tolower.c -o srcs/ft_tolower.o
+gcc -Wall -Wextra -Werror -c srcs/ft_toupper.c -o srcs/ft_toupper.o
+gcc -Wall -Wextra -Werror -c get_next_line/get_next_line_bonus.c -o get_next_line/get_next_line_bonus.o
+gcc -Wall -Wextra -Werror -c get_next_line/get_next_line_utils_bonus.c -o get_next_line/get_next_line_utils_bonus.o
+make -C ft_printf
+gcc -Wall -Werror -Wextra -c srcs/ft_format_check.c -o srcs/ft_format_check.o
+gcc -Wall -Werror -Wextra -c srcs/ft_format_check_1.c -o srcs/ft_format_check_1.o
+gcc -Wall -Werror -Wextra -c srcs/ft_print_hex.c -o srcs/ft_print_hex.o
+gcc -Wall -Werror -Wextra -c srcs/ft_print_int.c -o srcs/ft_print_int.o
+gcc -Wall -Werror -Wextra -c srcs/ft_print_ptr.c -o srcs/ft_print_ptr.o
+gcc -Wall -Werror -Wextra -c srcs/ft_print_uint.c -o srcs/ft_print_uint.o
+gcc -Wall -Werror -Wextra -c srcs/ft_printf.c -o srcs/ft_printf.o
+gcc -Wall -Werror -Wextra -c srcs/ft_utils.c -o srcs/ft_utils.o
+gcc -Wall -Werror -Wextra -c srcs/ft_utils_1.c -o srcs/ft_utils_1.o
+gcc -Wall -Werror -Wextra -c srcs/ft_utils_2.c -o srcs/ft_utils_2.o
+ar rcs libftprintf.a srcs/ft_format_check.o srcs/ft_format_check_1.o srcs/ft_print_hex.o srcs/ft_print_int.o srcs/ft_print_ptr.o srcs/ft_print_uint.o srcs/ft_printf.o srcs/ft_utils.o srcs/ft_utils_1.o srcs/ft_utils_2.o
+ar rcs libft.a srcs/ft_atoi.o srcs/ft_bzero.o srcs/ft_calloc.o srcs/ft_isalnum.o srcs/ft_isalpha.o srcs/ft_isascii.o srcs/ft_isdigit.o srcs/ft_isprint.o srcs/ft_itoa.o srcs/ft_memchr.o srcs/ft_memcmp.o srcs/ft_memcpy.o srcs/ft_memmove.o srcs/ft_memset.o srcs/ft_putchar_fd.o srcs/ft_putendl_fd.o srcs/ft_putnbr_fd.o srcs/ft_putstr_fd.o srcs/ft_split.o srcs/ft_strchr.o srcs/ft_strdup.o srcs/ft_striteri.o srcs/ft_strjoin.o srcs/ft_strlcat.o srcs/ft_strlcpy.o srcs/ft_strlen.o srcs/ft_strmapi.o srcs/ft_strncmp.o srcs/ft_strnstr.o srcs/ft_strrchr.o srcs/ft_strtrim.o srcs/ft_substr.o srcs/ft_tolower.o srcs/ft_toupper.o get_next_line/get_next_line_bonus.o get_next_line/get_next_line_utils_bonus.o ft_printf/libftprintf.a
+gcc -Wall -Wextra -Werror -fsanitize=address -g3 srcs/main.o srcs/parsing_utils.o srcs/piping.o srcs/piping_utils.o srcs/freeing_utils.o -o pipex libft/libft.a

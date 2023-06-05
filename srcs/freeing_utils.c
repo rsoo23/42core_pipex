@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 02:11:23 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/05 02:36:06 by codespace        ###   ########.fr       */
+/*   Updated: 2023/06/05 20:23:10 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,18 @@
 
 void	free_cmds(char ***cmds)
 {
-    int i;
+	int	i;
 	int	j;
 
-    i = -1;
-    while (cmds[++i])
+	i = -1;
+	while (cmds[++i])
 	{
 		j = -1;
 		while (cmds[i][++j])
 			free(cmds[i][j]);
-        free(cmds[i]);
+		free(cmds[i]);
 	}
-    free(cmds);
-}
-
-void	free_pipefd(int	**pipefd)
-{
-	int	i;
-
-	i = -1;
-	while (pipefd[++i])
-		free(pipefd[i]);
-	free(pipefd);
+	free(cmds);
 }
 
 void	free_2d_array(char **arr)
@@ -46,4 +36,13 @@ void	free_2d_array(char **arr)
 	while (arr[++i])
 		free(arr[i]);
 	free(arr);
+}
+
+void	free_and_exit(t_info *info)
+{
+	perror("Error");
+	free_cmds(info->cmds);
+	free_2d_array(info->path_list);
+	free(info);
+	exit(EXIT_FAILURE);
 }

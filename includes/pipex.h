@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:40:13 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/05 02:45:19 by codespace        ###   ########.fr       */
+/*   Updated: 2023/06/05 20:17:31 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	PIPEX_H
+#ifndef PIPEX_H
 # define PIPEX_H
 
 # include "../libft/libft.h"
@@ -22,8 +22,7 @@ typedef struct s_info
 	int		cmd_num;
 	int		pipe_num;
 	char	***cmds;
-	int		**pipefd;
-	pid_t	*pids;
+	pid_t	pid;
 	int		cmd_index;
 	int		pipe_index;
 	char	**path_list;
@@ -36,17 +35,11 @@ void	get_cmds(t_info *info, char **av);
 void	get_paths(t_info *info, char **envp);
 
 // freeing_utils.c
-void    free_cmds(char ***cmds);
-void	free_pipefd(int	**pipefd);
+void	free_cmds(char ***cmds);
 void	free_2d_array(char **arr);
+void	free_and_exit(t_info *info);
 
 // piping.c
-void	parent_process(t_info *info);
-
-// piping_utils.c
-void	execute_cmd(t_info *info);
-void	write_to_pipe(t_info *info, int fd, int i);
-void	read_from_pipe(t_info *info, int fd, int i);
-void	close_pipes(t_info *info);
+void	piping(t_info *info, int ac);
 
 #endif

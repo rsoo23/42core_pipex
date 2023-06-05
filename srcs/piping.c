@@ -12,18 +12,24 @@
 
 #include "../includes/pipex.h"
 
-static void	create_pipes(t_info *info)
+static void	execute_cmd(t_info *info)
 {
-	int	i;
+	int		i;
+	char	*cmd_path;
 
 	i = -1;
-	while (++i < info->pipe_num)
+	while (info->path_list[++i])
 	{
-		info->pipefd[i] = malloc(sizeof(int) * 2);
-		if (pipe(info->pipefd[i]) == -1)
+		cmd_path = ft_strjoin(info->path_list[i], "/");
+		cmd_path = ft_strjoin(cmd_path, info->cmds[info->cmd_index][0]);
+		printf("cmdpath:%s, ind: %d, cmd_ind: %d\n\n", cmd_path, i, info->cmd_index);
+		if (access(cmd_path, X_OK) == 0)
 		{
-			perror("pipe");
-			exit(EXIT_FAILURE);
+			if (execve(cmd_path, info->cmds[info->cmd_index], NULL) == -1)
+			{
+				free(cmd_path);
+				free_and_exit(info);
+			}
 		}
 	}
 }
@@ -35,75 +41,55 @@ dup2(old, new);
 - below: fd_in and 0 represents the file fd
 - redirect STDIN to the file fd
 */
-static void	infile_to_pipe(t_info *info)
+
+static void	child_process(t_info *info)
 {
-	if (dup2(info->fd_in, STDIN_FILENO) == -1)
-	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
-	}
-	execute_cmd(info);
-	write_to_pipe(info, info->fd_in, info->pipe_index);
-}
+	int	pipefd[2];
 
-static void	pipe_to_outfile(t_info *info)
-{
-	if (dup2(info->fd_out, STDOUT_FILENO) == -1)
+	if (pipe(pipefd) == -1)
+		free_and_exit(info);
+	info->pid = fork();
+	if (info->pid == -1)
+		free_and_exit(info);
+	if (info->pid == 0)
 	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
+		close(pipefd[0]);
+		dup2(pipefd[1], STDOUT_FILENO);
+		execute_cmd(info);
+		info->cmd_index++;
 	}
-	execute_cmd(info);
-	read_from_pipe(info, info->fd_out, info->pipe_index);
-	exit(EXIT_SUCCESS);
-}
-
-
-static void	piping(t_info *info)
-{
-	if (dup2(info->pipefd[info->pipe_index][0], STDIN_FILENO) == -1)
+	else if (info->pid > 0)
 	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
+		close(pipefd[1]);
+		dup2(pipefd[0], STDIN_FILENO);
+		waitpid(info->pid, NULL, 0);
 	}
-	execute_cmd(info);
-	info->pipe_index++;
-	if (dup2(info->pipefd[info->pipe_index][1], STDOUT_FILENO) == -1)
-	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
-	}
-}
-
-void	parent_process(t_info *info)
-{
-	int		i;
-
-	i = -1;
-	create_pipes(info);
-	while (++i < info->cmd_num)
-	{
-		info->pids[i] = fork();
-		if (info->pids[i] == -1)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
-		if (info->pids[0] == 0)
-			infile_to_pipe(info);
-		else if (info->pids[info->pipe_num] == 0)
-			pipe_to_outfile(info);
-		else if (info->pids[info->pipe_num] > 0)
-			waitpid(info->pids[info->pipe_num], NULL, 0);
-		else
-			piping(info);
-	}
-	close_pipes(info);
 }
 
 /*
-          INFILE -> child 1: execve -> write to pipe 1
-read from pipe 1 -> child 2: execve -> write to pipe 2
-read from pipe 2 -> child 2: execve -> write to pipe 3
-read from pipe 3 -> child 3: execve -> OUTFILE 
+fork():
+child: opens the write end of pipe
+parent: opens the read end of pipe and waits for child to end
+
+piping:
+1. connect the pipes first / do the redirection first
+
+	initial: STDIN --> cmd 1 --> STDOUT
+	result:   fdin --> cmd 1 --> pipefd[1]
+
+2. execute cmd while parent waits
 */
+
+void	piping(t_info *info, int ac)
+{
+	if (dup2(info->fd_in, STDIN_FILENO) == -1)
+		free_and_exit(info);
+	while (ac-- > 4)
+	{
+		child_process(info);
+		printf("ac: %d\n", ac);
+	}
+	if (dup2(info->fd_out, STDOUT_FILENO) == -1)
+		free_and_exit(info);
+	execute_cmd(info);
+}

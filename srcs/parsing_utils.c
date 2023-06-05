@@ -18,9 +18,7 @@ void	init_info(t_info *info, int ac)
 	info->fd_out = 0;
 	info->cmd_num = ac - 3;
 	info->pipe_num = info->cmd_num - 1;
-    info->cmds = malloc(sizeof(char **) * info->cmd_num);
-	info->pipefd = malloc(sizeof(int *) * info->pipe_num);
-	info->pids = malloc(sizeof(pid_t) * info->cmd_num);
+	info->cmds = malloc(sizeof(char **) * info->cmd_num);
 	info->cmd_index = 0;
 	info->pipe_index = 0;
 }
@@ -30,18 +28,12 @@ void	get_fd(t_info *info, int ac, char **av)
 	info->fd_in = open(av[1], O_RDONLY);
 	info->fd_out = open(av[ac - 1], O_WRONLY);
 	if (info->fd_in < 0)
-	{
-		perror("Error");
-		exit(EXIT_FAILURE);
-	}
+		free_and_exit(info);
 	if (info->fd_out < 0)
 	{
 		info->fd_out = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 777);
 		if (info->fd_out < 0)
-		{
-			perror("Error");
-			exit(EXIT_FAILURE);
-		}
+			free_and_exit(info);
 	}
 }
 
@@ -49,11 +41,11 @@ void	get_fd(t_info *info, int ac, char **av)
 // ./pipex file1 cmd1 cmd2 ... file2
 void	get_cmds(t_info *info, char **av)
 {
-    int i;
+	int	i;
 
-    i = -1;
-    while (++i < info->cmd_num)
-        info->cmds[i] = ft_split(av[i + 2], ' ');
+	i = -1;
+	while (++i < info->cmd_num)
+		info->cmds[i] = ft_split(av[i + 2], ' ');
 }
 
 void	get_paths(t_info *info, char **envp)
@@ -63,7 +55,7 @@ void	get_paths(t_info *info, char **envp)
 
 	i = -1;
 	while (envp[++i])
-		if (!ft_strncmp(envp[i], "PATH=", 6))
+		if (!ft_strncmp(envp[i], "PATH=", 5))
 			break ;
 	path_str = ft_substr(envp[i], 5, 1024);
 	info->path_list = ft_split(path_str, ':');
