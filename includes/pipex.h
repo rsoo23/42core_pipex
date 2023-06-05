@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:40:13 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/04 00:17:21 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/05 02:45:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,26 @@ typedef struct s_info
 	char	***cmds;
 	int		**pipefd;
 	pid_t	*pids;
-	char	*cmd_path;
 	int		cmd_index;
 	int		pipe_index;
+	char	**path_list;
 }	t_info;
 
 // parsing_utils.c
 void	init_info(t_info *info, int ac);
-void    free_cmds(char ***cmds);
-void	free_pipefd(int	**pipefd);
 void	get_fd(t_info *info, int ac, char **av);
 void	get_cmds(t_info *info, char **av);
+void	get_paths(t_info *info, char **envp);
+
+// freeing_utils.c
+void    free_cmds(char ***cmds);
+void	free_pipefd(int	**pipefd);
+void	free_2d_array(char **arr);
 
 // piping.c
 void	parent_process(t_info *info);
 
-// utils_1.c
+// piping_utils.c
 void	execute_cmd(t_info *info);
 void	write_to_pipe(t_info *info, int fd, int i);
 void	read_from_pipe(t_info *info, int fd, int i);

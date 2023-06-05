@@ -3,20 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 10:39:28 by rsoo              #+#    #+#              #
-#    Updated: 2023/06/01 10:44:49 by rsoo             ###   ########.fr        #
+#    Updated: 2023/06/05 02:37:00 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 RM = rm -rf
 
 SRCS_DIR = srcs/
-SRCS_FILES = main parsing_utils piping utils_1
+SRCS_FILES = main parsing_utils piping piping_utils freeing_utils 
 C_FILES = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJ = $(C_FILES:.c=.o)
 OUT = outfile

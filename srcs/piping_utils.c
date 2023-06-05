@@ -17,17 +17,24 @@ command path: /bin/(shell command)
 */
 void	execute_cmd(t_info *info)
 {
-	info->cmd_path = ft_strjoin("/bin/", info->cmds[info->cmd_index][0]);
-	if (access(info->cmd_path, X_OK) == 0)
+	int		i;
+	char	*cmd_path;
+
+	i = -1;
+	while (info->path_list[++i])
 	{
-		if (execve(info->cmd_path, info->cmds[info->cmd_index], NULL) == -1)
+		cmd_path = ft_strjoin(info->path_list[i], info->cmds[info->cmd_index][0]);
+		if (access(cmd_path, X_OK) == 0)
 		{
-			perror("execve");
-			exit(EXIT_FAILURE);
+			if (execve(cmd_path, info->cmds[info->cmd_index], NULL) == -1)
+			{
+				perror("execve");
+				exit(EXIT_FAILURE);
+			}
 		}
+		free(cmd_path);
 	}
 	info->cmd_index++;
-	free(info->cmd_path);
 }
 
 // reads from fd (infile) and writes it to the pipe
