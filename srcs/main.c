@@ -12,23 +12,6 @@
 
 #include "../includes/pipex.h"
 
-/*
-closes write end of pipe
-redirect stdio to read end of pipe
-*/
-void	child_proc(int *pipefd)
-{
-	close(pipefd[1]);
-	if (dup2(pipefd[0], STDIN_FILENO) == -1)
-	{
-		perror("dup2");
-		exit(EXIT_FAILURE);
-	}
-	execve()
-	close(pipefd[0]);
-	exit(EXIT_SUCCESS);
-}
-
 int	main(int ac, char **av)
 {
 	t_info	*info;
@@ -41,5 +24,7 @@ int	main(int ac, char **av)
 	parent_process(info);
 	
 	free_cmds(info->cmds);
+	free_pipefd(info->pipefd);
+	free(info->pids);
 	free(info);
 }

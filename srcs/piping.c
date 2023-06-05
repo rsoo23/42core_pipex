@@ -19,6 +19,7 @@ static void	create_pipes(t_info *info)
 	i = -1;
 	while (++i < info->pipe_num)
 	{
+		info->pipefd[i] = malloc(sizeof(int) * 2);
 		if (pipe(info->pipefd[i]) == -1)
 		{
 			perror("pipe");
@@ -54,13 +55,24 @@ static void	pipe_to_outfile(t_info *info)
 	}
 	execute_cmd(info);
 	read_from_pipe(info, info->fd_out, info->pipe_index);
-
 	exit(EXIT_SUCCESS);
 }
 
-static void	piping_proc(t_info *info)
+
+static void	piping(t_info *info)
 {
-	
+	if (dup2(info->pipefd[info->pipe_index][0], STDIN_FILENO) == -1)
+	{
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
+	execute_cmd(info);
+	info->pipe_index++;
+	if (dup2(info->pipefd[info->pipe_index][1], STDOUT_FILENO) == -1)
+	{
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	parent_process(t_info *info)
@@ -81,12 +93,12 @@ void	parent_process(t_info *info)
 			infile_to_pipe(info);
 		else if (info->pids[info->pipe_num] == 0)
 			pipe_to_outfile(info);
+		else if (info->pids[info->pipe_num] > 0)
+			waitpid(info->pids[info->pipe_num], NULL, 0);
 		else
-		{
-			execute_cmd(info);
-			piping_process(info);
-		}
+			piping(info);
 	}
+	close_pipes(info);
 }
 
 /*

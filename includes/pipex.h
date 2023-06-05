@@ -13,7 +13,7 @@
 #ifndef	PIPEX_H
 # define PIPEX_H
 
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 typedef struct s_info
 {
@@ -22,7 +22,7 @@ typedef struct s_info
 	int		cmd_num;
 	int		pipe_num;
 	char	***cmds;
-	int		*pipefd[2];
+	int		**pipefd;
 	pid_t	*pids;
 	char	*cmd_path;
 	int		cmd_index;
@@ -31,6 +31,8 @@ typedef struct s_info
 
 // parsing_utils.c
 void	init_info(t_info *info, int ac);
+void    free_cmds(char ***cmds);
+void	free_pipefd(int	**pipefd);
 void	get_fd(t_info *info, int ac, char **av);
 void	get_cmds(t_info *info, char **av);
 
@@ -39,5 +41,8 @@ void	parent_process(t_info *info);
 
 // utils_1.c
 void	execute_cmd(t_info *info);
+void	write_to_pipe(t_info *info, int fd, int i);
+void	read_from_pipe(t_info *info, int fd, int i);
+void	close_pipes(t_info *info);
 
 #endif
