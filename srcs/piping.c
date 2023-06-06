@@ -12,7 +12,7 @@
 
 #include "../includes/pipex.h"
 
-static void	execute_cmd(t_info *info)
+void	execute_cmd(t_info *info)
 {
 	int		i;
 	char	*cmd_path;
@@ -58,10 +58,10 @@ static void	child_process(t_info *info)
 	}
 	else if (info->pid > 0)
 	{
+		waitpid(info->pid, NULL, 0);
 		info->cmd_index++;
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
-		waitpid(info->pid, NULL, 0);
 	}
 }
 

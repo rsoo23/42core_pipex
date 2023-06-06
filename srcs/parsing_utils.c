@@ -12,19 +12,7 @@
 
 #include "../includes/pipex.h"
 
-void	init_info(t_info *info, int ac)
-{
-	info->fd_in = 0;
-	info->fd_out = 0;
-	info->cmd_num = ac - 3;
-	info->pipe_num = info->cmd_num - 1;
-	info->cmds = NULL;
-	info->path_list = NULL;
-	info->cmd_index = 0;
-	info->pipe_index = 0;
-}
-
-void	get_fd(t_info *info, int ac, char **av)
+void	get_files_fd(t_info *info, int ac, char **av)
 {
 	info->fd_in = open(av[1], O_RDONLY);
 	info->fd_out = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0666);

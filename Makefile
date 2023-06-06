@@ -6,7 +6,7 @@
 #    By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 10:39:28 by rsoo              #+#    #+#              #
-#    Updated: 2023/06/05 19:19:00 by rsoo             ###   ########.fr        #
+#    Updated: 2023/06/06 14:02:25 by rsoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 RM = rm -rf
 
 SRCS_DIR = srcs/
-SRCS_FILES = main parsing_utils piping freeing_utils
+SRCS_FILES = main parsing_utils piping freeing_utils here_doc_utils
 C_FILES = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_FILES)))
 OBJ = $(C_FILES:.c=.o)
 OUT = outfile

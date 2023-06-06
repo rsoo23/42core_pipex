@@ -47,7 +47,7 @@ char	*read_buffer_assign(int fd, char *buf)
 		if (read_num <= 0)
 			break ;
 		buffer[read_num] = '\0';
-		buf = ft_strjoin(buf, buffer);
+		buf = ft_strjoin_gnl(buf, buffer);
 	}
 	free(buffer);
 	if (read_num == -1)

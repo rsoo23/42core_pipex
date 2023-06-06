@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:40:13 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/06 11:28:15 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/06 14:54:38 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ typedef struct s_info
 }	t_info;
 
 // parsing_utils.c
-void	init_info(t_info *info, int ac);
-void	get_fd(t_info *info, int ac, char **av);
+void	get_files_fd(t_info *info, int ac, char **av);
 void	get_cmds(t_info *info, char **av);
 void	get_paths(t_info *info, char **envp);
 
@@ -40,5 +39,11 @@ void	free_and_exit(t_info *info, const char *str, int status);
 
 // piping.c
 void	piping(t_info *info, int ac);
+void	execute_cmd(t_info *info);
+
+// here_doc_utils.c
+void	get_heredoc_file_fd(t_info *info, int ac, char **av);
+void	get_heredoc_cmds(t_info *info, char **av);
+void	here_doc_child_process(t_info *info, char *limiter);
 
 #endif
