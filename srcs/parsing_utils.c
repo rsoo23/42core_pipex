@@ -19,6 +19,7 @@ void	init_info(t_info *info, int ac)
 	info->cmd_num = ac - 3;
 	info->pipe_num = info->cmd_num - 1;
 	info->cmds = NULL;
+	info->path_list = NULL;
 	info->cmd_index = 0;
 	info->pipe_index = 0;
 }
@@ -26,15 +27,11 @@ void	init_info(t_info *info, int ac)
 void	get_fd(t_info *info, int ac, char **av)
 {
 	info->fd_in = open(av[1], O_RDONLY);
-	info->fd_out = open(av[ac - 1], O_WRONLY);
+	info->fd_out = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (info->fd_in < 0)
-		free_and_exit(info, "Infile Error");
+		free_and_exit(info, "Infile Error", EXIT_FAILURE);
 	if (info->fd_out < 0)
-	{
-		info->fd_out = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0666);
-		if (info->fd_out < 0)
-			free_and_exit(info, "Outfile Error");
-	}
+		free_and_exit(info, "Outfile Error", EXIT_FAILURE);
 }
 
 //     0     1    2     3       
@@ -44,8 +41,8 @@ void	get_cmds(t_info *info, char **av)
 	int	i;
 
 	i = -1;
-	info->cmd_num = malloc(sizeof(char *) * (info->cmd_num + 1));
-	if (!info->cmd_num)
+	info->cmds = malloc(sizeof(char *) * (info->cmd_num + 1));
+	if (!info->cmds)
 		return ;
 	while (++i < info->cmd_num)
 		info->cmds[i] = ft_strdup(av[i + 2]);

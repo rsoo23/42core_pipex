@@ -24,14 +24,11 @@ static void	execute_cmd(t_info *info)
 	{
 		cmd_path = ft_strjoin(info->path_list[i], "/");
 		cmd_path = ft_strjoin(cmd_path, cmd[0]);
-		if (access(cmd_path, X_OK) == 0)
+		if (access(cmd_path, X_OK) == 0 && execve(cmd_path, cmd, NULL) == -1)
 		{
-			if (execve(cmd_path, cmd, NULL) == -1)
-			{
-				free_2d_array(cmd);
-				free(cmd_path);
-				free_and_exit(info, "Execve Error");
-			}
+			free_2d_array(cmd);
+			free(cmd_path);
+			free_and_exit(info, "Execve Error", EXIT_FAILURE);
 		}
 	}
 }
@@ -49,10 +46,10 @@ static void	child_process(t_info *info)
 	int	pipefd[2];
 
 	if (pipe(pipefd) == -1)
-		free_and_exit(info, "Pipe Error");
+		free_and_exit(info, "Pipe Error", EXIT_FAILURE);
 	info->pid = fork();
 	if (info->pid == -1)
-		free_and_exit(info, "Fork Error");
+		free_and_exit(info, "Fork Error", EXIT_FAILURE);
 	if (info->pid == 0)
 	{
 		close(pipefd[0]);
@@ -85,10 +82,10 @@ piping:
 void	piping(t_info *info, int ac)
 {
 	if (dup2(info->fd_in, STDIN_FILENO) == -1)
-		free_and_exit(info, "Dup2 Error");
+		free_and_exit(info, "Dup2 Error", EXIT_FAILURE);
 	while (ac-- > 4)
 		child_process(info);
 	if (dup2(info->fd_out, STDOUT_FILENO) == -1)
-		free_and_exit(info, "Dup2 Error");
+		free_and_exit(info, "Dup2 Error", EXIT_FAILURE);
 	execute_cmd(info);
 }
