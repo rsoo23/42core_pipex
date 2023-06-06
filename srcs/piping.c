@@ -31,6 +31,9 @@ void	execute_cmd(t_info *info)
 			free_and_exit(info, "Execve Error", EXIT_FAILURE);
 		}
 	}
+	free_2d_array(cmd);
+	free(cmd_path);
+	free_and_exit(info, "Command not found", EXIT_FAILURE);
 }
 
 /*
@@ -53,7 +56,8 @@ static void	child_process(t_info *info)
 	if (info->pid == 0)
 	{
 		close(pipefd[0]);
-		dup2(pipefd[1], STDOUT_FILENO);
+		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+			free_and_exit(info, "Dup2 Error", EXIT_FAILURE);
 		execute_cmd(info);
 	}
 	else if (info->pid > 0)
@@ -61,7 +65,8 @@ static void	child_process(t_info *info)
 		waitpid(info->pid, NULL, 0);
 		info->cmd_index++;
 		close(pipefd[1]);
-		dup2(pipefd[0], STDIN_FILENO);
+		if (dup2(pipefd[0], STDIN_FILENO) == -1)
+			free_and_exit(info, "Dup2 Error", EXIT_FAILURE);
 	}
 }
 

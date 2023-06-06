@@ -1,7 +1,0 @@
-make clean -C libft
-make clean -C ft_printf
-make fclean -C libft
-make clean -C ft_printf
-make fclean -C ft_printf
-make -C libft
-make -C ft_printf

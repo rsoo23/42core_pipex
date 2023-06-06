@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 11:52:26 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/06 15:00:21 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/06 17:35:45 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,24 @@ here_doc
 4. redirect stdin to the read end of the pipe
 5. append to the file
 */
-static void	here_doc_gnl(int *pipefd, char *limiter)
+static void	here_doc_gnl(t_info *info, int *pipefd)
 {
 	char	*str;
 
-	str = get_next_line(0);
-	while (ft_strncmp(str, limiter, ft_strlen(limiter)))
+	str = get_next_line(STDIN_FILENO);
+	if (!str)
+		return ;
+	printf("hi: %d\n", ft_strncmp(str, info->limiter, ft_strlen(info->limiter)) != 0);
+	while (ft_strncmp(str, info->limiter, ft_strlen(info->limiter)) != 0)
 	{
-		write(pipefd[1], &str, ft_strlen(str));
+		write(pipefd[1], str, ft_strlen(str));
 		free(str);
-		str = get_next_line(0);
+		str = get_next_line(STDIN_FILENO);
 	}
+	free(str);
 }
 
-void	here_doc_child_process(t_info *info, char *limiter)
+void	here_doc_child_process(t_info *info)
 {
 	int	pipefd[2];
 
@@ -65,14 +69,16 @@ void	here_doc_child_process(t_info *info, char *limiter)
 	if (info->pid == 0)
 	{
 		close(pipefd[0]);
-		dup2(pipefd[1], STDOUT_FILENO);
-		here_doc_gnl(pipefd, limiter);
+		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+			free_and_exit(info, "Dup2 Error", EXIT_FAILURE);
+		here_doc_gnl(info, pipefd);
 		execute_cmd(info);
 	}
 	else if (info->pid > 0)
 	{
 		waitpid(info->pid, NULL, 0);
 		close(pipefd[1]);
-		dup2(pipefd[0], STDIN_FILENO);
+		if (dup2(pipefd[0], STDIN_FILENO) == -1)
+			free_and_exit(info, "Dup2 Error", EXIT_FAILURE);
 	}
 }

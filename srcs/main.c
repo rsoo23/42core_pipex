@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:40:57 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/06 14:54:28 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/06 16:59:58 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	init_info(t_info *info, int ac)
 	info->path_list = NULL;
 	info->cmd_index = 0;
 	info->pipe_index = 0;
+	info->limiter = NULL;
 }
 
 static void	pipe_handling(t_info *info, int ac, char **av)
@@ -33,13 +34,11 @@ static void	pipe_handling(t_info *info, int ac, char **av)
 
 static void	here_doc(t_info *info, int ac, char **av)
 {
-	char	*limiter;
-
-	limiter = ft_strjoin(av[2], "\n");
 	get_heredoc_file_fd(info, ac, av);
 	get_heredoc_cmds(info, av);
-	here_doc_child_process(info, limiter);
-	free(limiter);
+	info->limiter = ft_strjoin(av[2], "\n");
+	here_doc_child_process(info);
+	free(info->limiter);
 	if (dup2(info->fd_out, STDOUT_FILENO) == -1)
 		free_and_exit(info, "Dup2 Error", EXIT_FAILURE);
 	execute_cmd(info);

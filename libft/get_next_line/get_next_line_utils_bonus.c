@@ -36,8 +36,8 @@ char	*ft_strjoin_gnl(const char *s1, const char *s2)
 	size_t			len2;
 
 	i = 0;
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = ft_strlen_gnl(s1);
+	len2 = ft_strlen_gnl(s2);
 	res = malloc(len1 + len2 + 1);
 	if (!res)
 		return (NULL);
@@ -51,36 +51,15 @@ char	*ft_strjoin_gnl(const char *s1, const char *s2)
 	return (res);
 }
 
-// size_t	ft_strlen(const char *s)
-// {
-// 	size_t	i;
+size_t	ft_strlen_gnl(const char *s)
+{
+	size_t	i;
 
-// 	i = 0;
-// 	while (s && s[i])
-// 		i++;
-// 	return (i);
-// }
-
-// char	*ft_strdup(const char *s)
-// {
-// 	int		i;
-// 	char	*dest;
-
-// 	i = 0;
-// 	if (!s)
-// 		return (0);
-// 	while (s[i])
-// 		i++;
-// 	dest = malloc(sizeof(char) * (i + 1));
-// 	i = 0;
-// 	while (s[i])
-// 	{
-// 		dest[i] = s[i];
-// 		i++;
-// 	}
-// 	dest[i] = '\0';
-// 	return (dest);
-// }
+	i = 0;
+	while (s && s[i])
+		i++;
+	return (i);
+}
 
 char	*ft_free_ret_null(char *free_str)
 {

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:40:13 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/06 14:54:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/06 17:00:06 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_info
 	int		cmd_index;
 	int		pipe_index;
 	char	**path_list;
+	char	*limiter;
 }	t_info;
 
 // parsing_utils.c
@@ -44,6 +45,6 @@ void	execute_cmd(t_info *info);
 // here_doc_utils.c
 void	get_heredoc_file_fd(t_info *info, int ac, char **av);
 void	get_heredoc_cmds(t_info *info, char **av);
-void	here_doc_child_process(t_info *info, char *limiter);
+void	here_doc_child_process(t_info *info);
 
 #endif
