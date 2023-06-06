@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:22:21 by rsoo              #+#    #+#             */
-/*   Updated: 2023/05/31 10:53:57 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/06 08:40:37 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	i = 0;
 	if (n == 0)
 		return (0);
-	while (s1[i] && s2[i] && i < n - 1)
+	while (s1[i] && s2[i] && i < n)
 	{
 		if (s1[i] != s2[i])
 			break ;

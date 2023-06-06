@@ -24,14 +24,13 @@ static void	execute_cmd(t_info *info)
 	{
 		cmd_path = ft_strjoin(info->path_list[i], "/");
 		cmd_path = ft_strjoin(cmd_path, cmd[0]);
-		// printf("cmdpath:%s, ind: %d, cmd_ind: %d\n\n", cmd_path, i, info->cmd_index);
 		if (access(cmd_path, X_OK) == 0)
 		{
 			if (execve(cmd_path, cmd, NULL) == -1)
 			{
 				free_2d_array(cmd);
 				free(cmd_path);
-				free_and_exit(info);
+				free_and_exit(info, "Execve Error");
 			}
 		}
 	}
@@ -50,10 +49,10 @@ static void	child_process(t_info *info)
 	int	pipefd[2];
 
 	if (pipe(pipefd) == -1)
-		free_and_exit(info);
+		free_and_exit(info, "Pipe Error");
 	info->pid = fork();
 	if (info->pid == -1)
-		free_and_exit(info);
+		free_and_exit(info, "Fork Error");
 	if (info->pid == 0)
 	{
 		close(pipefd[0]);
@@ -86,10 +85,10 @@ piping:
 void	piping(t_info *info, int ac)
 {
 	if (dup2(info->fd_in, STDIN_FILENO) == -1)
-		free_and_exit(info);
+		free_and_exit(info, "Dup2 Error");
 	while (ac-- > 4)
 		child_process(info);
 	if (dup2(info->fd_out, STDOUT_FILENO) == -1)
-		free_and_exit(info);
+		free_and_exit(info, "Dup2 Error");
 	execute_cmd(info);
 }

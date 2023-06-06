@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 02:11:23 by codespace         #+#    #+#             */
-/*   Updated: 2023/06/05 23:42:21 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/06 08:53:10 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ void	free_2d_array(char **arr)
 	free(arr);
 }
 
-void	free_and_exit(t_info *info)
+void	free_and_exit(t_info *info, const char *str)
 {
-	perror("Error");
-	free_2d_array(info->cmds);
-	free_2d_array(info->path_list);
+	perror(str);
+	if (info->cmds)
+		free_2d_array(info->cmds);
+	if (info->path_list)
+		free_2d_array(info->path_list);
 	free(info);
 	exit(EXIT_FAILURE);
 }
