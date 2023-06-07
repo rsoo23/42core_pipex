@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:40:13 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/07 12:58:52 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/07 13:50:46 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "../libft/libft.h"
 
-#define WRITE_END 1
-#define READ_END 0
+# define WRITE_END 1
+# define READ_END 0
 
 typedef struct s_info
 {
