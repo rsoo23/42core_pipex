@@ -6,13 +6,14 @@
 #    By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/01 10:39:28 by rsoo              #+#    #+#              #
-#    Updated: 2023/06/06 14:02:25 by rsoo             ###   ########.fr        #
+#    Updated: 2023/06/07 10:46:48 by rsoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+# CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -fsanitize=address -g3
 RM = rm -rf
 
 SRCS_DIR = srcs/

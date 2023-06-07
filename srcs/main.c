@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:40:57 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/06 16:59:58 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/07 13:12:15 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	here_doc(t_info *info, int ac, char **av)
 	info->limiter = ft_strjoin(av[2], "\n");
 	here_doc_child_process(info);
 	free(info->limiter);
+	child_process(info);
 	if (dup2(info->fd_out, STDOUT_FILENO) == -1)
 		free_and_exit(info, "Dup2 Error", EXIT_FAILURE);
 	execute_cmd(info);

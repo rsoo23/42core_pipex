@@ -31,8 +31,8 @@ void	execute_cmd(t_info *info)
 			free_and_exit(info, "Execve Error", EXIT_FAILURE);
 		}
 	}
-	free_2d_array(cmd);
 	free(cmd_path);
+	free_2d_array(cmd);
 	free_and_exit(info, "Command not found", EXIT_FAILURE);
 }
 
@@ -44,7 +44,7 @@ dup2(old, new);
 - redirect STDIN to the file fd
 */
 
-static void	child_process(t_info *info)
+void	child_process(t_info *info)
 {
 	int	pipefd[2];
 
@@ -55,17 +55,18 @@ static void	child_process(t_info *info)
 		free_and_exit(info, "Fork Error", EXIT_FAILURE);
 	if (info->pid == 0)
 	{
-		close(pipefd[0]);
-		if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+		close(pipefd[READ_END]);
+		if (dup2(pipefd[WRITE_END], STDOUT_FILENO) == -1)
 			free_and_exit(info, "Dup2 Error", EXIT_FAILURE);
 		execute_cmd(info);
 	}
 	else if (info->pid > 0)
 	{
-		waitpid(info->pid, NULL, 0);
+		if (waitpid(info->pid, NULL, 0) == -1)
+			free_and_exit(info, "Waitpid Error", EXIT_FAILURE);
 		info->cmd_index++;
-		close(pipefd[1]);
-		if (dup2(pipefd[0], STDIN_FILENO) == -1)
+		close(pipefd[WRITE_END]);
+		if (dup2(pipefd[READ_END], STDIN_FILENO) == -1)
 			free_and_exit(info, "Dup2 Error", EXIT_FAILURE);
 	}
 }
@@ -79,7 +80,7 @@ piping:
 1. connect the pipes first / do the redirection first
 
 	initial: STDIN --> cmd 1 --> STDOUT
-	result:   fdin --> cmd 1 --> pipefd[1]
+	result:   fdin --> cmd 1 --> pipefd[WRITE_END]
 
 2. execute cmd while parent waits
 */

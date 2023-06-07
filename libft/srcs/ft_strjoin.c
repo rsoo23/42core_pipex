@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 15:57:14 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/06 15:03:08 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/07 13:04:30 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,29 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	while (s2[i])
 		res[j++] = s2[i++];
 	res[j] = '\0';
+	return (res);
+}
+
+char	*ft_strjoin_free(const char *s1, const char *s2)
+{
+	char			*res;
+	unsigned int	i;
+	size_t			len1;
+	size_t			len2;
+
+	i = 0;
+	len1 = ft_strlen_gnl(s1);
+	len2 = ft_strlen_gnl(s2);
+	res = malloc(len1 + len2 + 1);
+	if (!res)
+		return (NULL);
+	while (i++ < len1)
+		res[i - 1] = s1[i - 1];
+	i = 0;
+	while (i++ < len2)
+		res[i - 1 + len1] = s2[i - 1];
+	res[i - 1 + len1] = '\0';
+	free((char *)s1);
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 10:40:13 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/06 17:00:06 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/07 12:58:52 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define PIPEX_H
 
 # include "../libft/libft.h"
+
+#define WRITE_END 1
+#define READ_END 0
 
 typedef struct s_info
 {
@@ -41,6 +44,7 @@ void	free_and_exit(t_info *info, const char *str, int status);
 // piping.c
 void	piping(t_info *info, int ac);
 void	execute_cmd(t_info *info);
+void	child_process(t_info *info);
 
 // here_doc_utils.c
 void	get_heredoc_file_fd(t_info *info, int ac, char **av);
